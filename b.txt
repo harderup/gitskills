@@ -1,0 +1,7 @@
+实现并发任务的三种方法：
+1.实现Runnable接口 ，重写实现run()方法；
+2.继承Thread类，重写run()方法；
+3.当想让线程任务结束的时候有返回值，那么应该使用Callable<T>接口，他有一个泛型，这是call()方法返回值的类型，使用Callable应该实现call()而不是run()方法了而且必须由ExcutorService.submit()
+方法来调用，本质来说ExecutorService的submit()方法会产生一个Future的对象。我们可以用Future对
+象的isDone()来判读任务是否执行结束，用get()方法来获取call()的返回值。当直接使用get()方法时会
+产生阻塞。
