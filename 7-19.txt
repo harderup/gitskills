@@ -1,0 +1,64 @@
+7/19
+1	日报
+1.1	工作内容
+1.1.1	内容
+今天继续学习新框架，在昨天的基础上新加了后台登录页面和管理管理员功能。继续熟悉框架，继续查缺补漏，复习做过的算法题
+2	计划
+2.1	工作内容
+2.1.1	内容
+复习
+
+在一个二维数组中（每个一维数组的长度相同），每一行都按照从左到右递增的顺序排序，每一列都按照从上到下递增的顺序排序。请完成一个函数，输入这样的一个二维数组和一个整数，判断数组中是否含有该整数。
+解析：二维数组的二分查找
+public class Solution {
+    public boolean Find(int target, int [][] array) {
+        int i=0, j=(array[i].length-1);
+             while(i<array.length&&j>=0){
+               
+                     if(array[i][j]==target){
+                         return true;
+                     }else if(array[i][j]>target){
+                         j--;
+                     }else if(array[i][j]<target){
+                         i++;
+                     }
+                 
+             }
+        return false;
+    }
+}
+输入两个链表，找出它们的第一个公共结点
+解析：此处应用栈；现将两个链表入栈，然后逆向比较 如果两个结点为同一结点，结点存为n ，并且出栈，当两个结点不同时，返回n
+重点：做题时忽略两个全相同的链表，导致代码通过，但是通过率很低
+import java.util.Stack;
+public class Solution {
+    public ListNode FindFirstCommonNode(ListNode pHead1, ListNode pHead2) {
+        if(pHead1==null||pHead2==null){
+            return null;
+        }
+        Stack<ListNode> sta1=new Stack<ListNode>();
+        Stack<ListNode> sta2=new Stack<ListNode>();
+        ListNode n=null;
+        ListNode t=null;
+        t=pHead1;
+        while(t!=null){
+            sta1.push(t);
+            t=t.next;
+        }
+        t=pHead2;
+       while(t!=null){
+            sta2.push(t);
+            t=t.next;
+        }
+            while(!(sta1.empty())&&!(sta2.empty()))
+        if(sta1.peek().val==sta2.peek().val){
+            n=sta1.peek();
+            sta1.pop();
+            sta2.pop();
+        }else{
+            break;
+        }
+       return n;
+    }
+   
+}
