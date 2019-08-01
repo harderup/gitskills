@@ -1,0 +1,57 @@
+主题：日报
+日期：2019年7月31日
+内容：
+1：继续学习spring框架，如何配置spring容器，spring环境与Profile，条件化Bean，以及SpringAOP
+自己找资料学习了正则表达式
+主要问题还是在SpringAOP，虽然老师带着过了一遍，但还是感觉云里雾里，有些概念理解起来很吃力，这块需要下来认真再看一遍
+2：明天任务：学习spring MVC 学习Spring AOP
+算法1：
+输入一个整数数组，实现一个函数来调整该数组中数字的顺序，使得所有的奇数位于数组的前半部分，
+所有的偶数位于数组的后半部分，并保证奇数和奇数，偶数和偶数之间的相对位置不变。
+分析：； 浪费空间换时间，建立奇数栈和偶数栈，遍历数组将奇数偶数分别存入各自栈，再逆序遍历数组，将偶数 、奇数依次出栈，存入数组
+import java.util.Stack;
+public class Solution {
+    public void reOrderArray(int [] array) {
+      	Stack<Integer> a=new Stack<Integer>();
+	Stack<Integer> b=new Stack<Integer>();
+	for(int i=0;i<array.length;i++) {
+		if(array[i]%2==0) {
+			a.push(array[i]);
+			
+		}else {
+			b.push(array[i]);
+		}
+	
+	}
+	for(int i=array.length-1;i>=0;i--) {
+		if(!a.isEmpty()) {
+		array[i]=a.pop();
+		}else {
+			array[i]=b.pop();
+		}
+	}
+    }
+}
+算法2：
+输入一个链表，输出该链表中倒数第k个结点。
+解析:此处我依旧是用栈，将链表入栈，然后出栈，计数，得出结点
+优化思路为：首先一个指针从表头跑到第k个结点，然后再定义个指针指向表头，
+两指针同时跑，当第一个指针跑到尾部时，第二个指针指向第k个结点
+import java.util.Stack;
+public class Solution {
+    public ListNode FindKthToTail(ListNode head,int k) {
+        if(head==null||k==0)
+            return null;
+              Stack<ListNode> s=new Stack<ListNode>();
+        while(head!=null){
+            s.push(head);
+                head=head.next;
+        }
+        for(;k>1;k--){
+            s.pop();
+        }
+        if(s.isEmpty())
+            return null;
+        return s.pop();
+    }
+}
