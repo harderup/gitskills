@@ -1,0 +1,14 @@
+第一种：思路（遍历间隔除2直到为1，相同间隔的元素为一组，对每组进行插入排序）（*推荐*）
+C语言，升序
+void shellSort(int array[],int size){
+	int i,j,gap,temp;
+	for(gap=size/2;gap>0;gap/=2){
+		for(i=gap;i<size;i++){
+			temp=array[i];
+			for(j=i;j>gap-1&&array[j-gap]>temp;j-=gap){
+				array[j]=array[j-gap];
+			}
+			array[j]=temp;
+		}
+	}
+}
