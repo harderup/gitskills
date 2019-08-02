@@ -1,0 +1,40 @@
+ i  主题：日报
+ 日期：2019年8月1日	星期四
+ 内容：
+ 1.今天学习的内容：
+ 		老师讲了spring的基础配置和AOP
+				学习了多线程
+						学习基础数据结构：平衡二叉树的创建和删除
+						2.没有解决的问题：
+							Spring还没有搞懂
+							3.明天的学习计划：
+								老师上课讲Spring
+									算法题*2
+										继续复习多线程
+											
+											算法：继续剑指offer
+											1.反转链表
+											/*
+											public class ListNode {
+											    int val;
+											        ListNode next = null;
+												 
+												     ListNode(int val) {
+												             this.val = val;
+													         }
+														 }*/
+														 public class Solution {
+														     public ListNode ReverseList(ListNode head) {
+														             if (head==null) return null;
+															             ListNode Rhead=null,Pnext=null;
+																             while(null!=head){
+																	                 Pnext = head.next;
+																			  
+																			              head.next=Rhead;
+																				                  Rhead = head;
+																						   
+																						               head = Pnext;
+																							               }
+																								               return Rhead;
+																									           }
+																										   }
