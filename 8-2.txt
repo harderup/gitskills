@@ -1,0 +1,57 @@
+日期:8月2日
+学习内容：Spring MVC,基本了解 spring mvc基本框架
+存在问题：首先说spring，通过这两天的学习，感觉老师也是带我们过一下，很多细节性的问题，要我们自己去摸索和发现，
+课下需要付出大量的时间，但是项目组马上就要开始做了，这两天还得学习项目组的知识，spring得往后放放了，等做完项目，再把官方文档和那本书好好过一遍
+还有就是在算法联系中，慢慢感觉到自己存在的问题，现在比较大的一个问题就是，算法中如果涉及到链表，二叉树，就感觉无从下手，其实有时候能想通，就是实现不了；总结还是敲的太少
+算法1：输入两棵二叉树A，B，判断B是不是A的子结构。（ps：我们约定空树不是任意一个树的子结构）
+分析：先遍历二叉树A 找到两个字值相等的结点，然后调用比较函数，比较两个结点下每一个结点的值是否相等，一旦有不相等或者A树遍历完，返回false，当B二叉树遍历完，返回true
+但是，在比较函数的递归中，要先判断B树是否已经为空，如果先判断A树，就会出现两个同时遍历完，返回false的情况
+public class Solution {
+    public boolean HasSubtree(TreeNode root1,TreeNode root2) {
+         if(root1 == null||root2 == null) return false;
+        boolean result = false;
+        if(root1.val==root2.val){
+            result=Subtree(root1,root2);
+        }
+        if(!result){
+            result=HasSubtree(root1.left,root2);
+        }
+        if(!result){
+            result=HasSubtree(root1.right,root2);
+        }
+        return result;
+
+    }
+    public boolean Subtree(TreeNode root1,TreeNode root2){
+         if(root2==null)
+            return true;
+        if(root1==null)
+            return false;
+       
+        if(root1.val!=root2.val)
+            return false;
+        return Subtree(root1.left,root2.left)&&Subtree(root1.right,root2.right);
+    }
+}
+算法2：输入两个单调递增的链表，输出两个链表合成后的链表，当然我们需要合成后的链表满足单调不减规则。
+分析：这个题用递归做很有意思，先比较大小，那个链上节点值小 那个访问next，当遍历完两个链表时 return 挂链 return 挂链。。。。。。。
+public class Solution {
+    public ListNode Merge(ListNode list1,ListNode list2) {
+       ListNode list=null;
+        
+	    	if(list1==null&&list2==null) return null;
+	    	if(list1==null)
+	    		return list2;
+	    	if(list2==null)
+	    		return list1;
+	    	if(list1.val<list2.val){
+	    		list=list1;
+	    		list.next=Merge(list1.next,list2);
+	    	}else{
+	    		list=list2;
+	    		list.next=Merge(list1,list2.next);
+	    	}
+			return list;
+
+    }
+}
