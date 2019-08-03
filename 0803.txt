@@ -1,0 +1,124 @@
+﻿主题：日报
+日期：2019年8月3日	
+内容：
+1.今天学习的内容：
+		对数据库访问做了简单的学习。
+		
+		
+2.没有解决的问题：
+	git命令目前还未学完。
+3.明天的学习计划：
+	学姐的分享
+	
+算法：对算法练习做调整，先复习之间写过的算法但不熟练的算法
+1.数组中重复值问题
+	/**
+     *  给一个长度为n的数组，范围为0~ n-1,判断是否存在相同的元素，要求时间o(N),空间O(1)
+     * @param a
+     */
+    public static boolean hasSameElement(int [] a){
+        if (a==null||a.length<1){
+            throw new RuntimeException("输入数据异常");
+        }
+        for (int i=0;i<a.length;i++){
+
+            while (i!=a[i]){
+                if (a[i]<0||a[i]>=a.length){
+                    throw new RuntimeException("输入数据范围不正确");
+                }
+                int t=a[i];
+                if (a[i]==a[t]){
+                    return true;
+                }
+                int tem=a[i];
+                a[i]=a[t];
+                a[t]=tem;
+            }
+        }
+        return false;
+    }
+
+    /**
+     *  给定一个长度为n+1的数组，其值范围为1~ n,求处其中任意一个重复的数字
+     *      要求：不可以更改原数组中数的位置
+     *
+     *      复杂度为O(N*log(N))
+     * @param a
+     */
+    public static int getSameElement(int [] a){
+        if (a==null||a.length<1){
+            throw new RuntimeException("输入数据异常");
+        }
+        int low=1;
+        int high=a.length-1;
+        while (low<=high){
+            int mid=low+((high-low)>>1);
+            int len=count(a,low,mid);
+            if (low==high){
+                if (len>1){
+                    return low;
+                }else {
+                    break;
+                }
+            }
+            if (len>mid-low+1){
+                high=mid;
+            }else {
+                low=mid+1;
+            }
+        }
+
+        return -1;
+    }
+
+    private static int count(int a[],int start,int end){
+        int sum=0;
+        for (int i=0;i<a.length;i++){
+            if (a[i]>=a.length||a[i]<1){
+                if (a[i]<0||a[i]>=a.length){
+                    throw new RuntimeException("输入数据范围不正确");
+                }
+            }
+            if (a[i]>=start&&a[i]<=end){
+                sum++;
+            }
+        }
+        return sum;
+}
+
+2.根一棵据二叉树的前序，中序遍历序列，还原这颗二叉树
+ public static BTNode restoreTree(int [] a1,int [] a2){
+        if (a1==null||a1.length<1||a2==null||a2.length<1){
+            throw new RuntimeException("input data error");
+        }
+        return core(a1,0,a1.length-1,a2,0,a2.length-1);
+    }
+
+
+   public static BTNode core(int [] a1,int s1,int e1,int [] a2,int s2,int e2){
+        BTNode root=new BTNode();
+        root.data=a1[s1];
+
+        //  在中序遍历序列中找到根结点
+        int index=-1;
+        for (int i=s2;i<=e2;i++){
+            if (a2[i]==root.data){
+                index=i;
+                break;
+            }
+        }
+        if (index==-1){
+            throw new RuntimeException("input data error");
+        }
+
+        //  左子树不空
+        if (index>s2){
+            root.left=core(a1,s1+1,s1+(index-s2),a2,s2,index-1);
+        }
+        // 右子树不空
+        if (index<e2){
+            root.right=core(a1,1+s1+(index-s2),e1,a2,index+1,e2);
+        }
+
+        return root;
+    }
