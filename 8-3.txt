@@ -1,0 +1,48 @@
+日期：8月3日
+学习内容：主要学习了 限流的实现（漏桶、令牌桶），RPC基本原理，还有一些小的知识点
+存在问题：
+i++是否线程安全
+i++和++i的线程安全分为两种情况：
+1、如果i是局部变量（在方法里定义的），那么是线程安全的。因为局部变量是线程私有的，
+别的线程访问不到，其实也可以说没有线程安不安全之说，因为别的线程对他造不成影响。
+2、如果i是全局变量（类的成员变量），那么是线程不安全的。因为如果是全局变量的话，
+同一进程中的不同线程都有可能访问到。如果有大量线程同时执行i++操作，i变量的副本
+拷贝到每个线程的线程栈，当同时有两个线程栈以上的线程读取线程变量，假如此时是1的话，
+那么同时执行i++操作，再写入到全局变量，最后两个线程执行完，i会等于3而不会是2，
+所以，出现不安全性。
+Autowired与resources区别
+@Autowired注解是按照类型（byType）装配依赖对象，默认情况下它要求依赖对象必须存在，
+如果允许null值，可以设置它的required属性为false。如果我们想使用按照名称（byName）来装配，
+可以结合@Qualifier注解一起使用
+resources
+@Resource默认按照ByName自动注入，由J2EE提供，需要导入包javax.annotation.Resource。
+@Resource有两个重要的属性：name和type，而Spring将@Resource注解的name属性解析为bean的名字
+，而type属性则解析为bean的类型。所以，如果使用name属性，则使用byName的自动注入策略，
+而使用type属性时则使用byType自动注入策略。如果既不制定name也不制定type属性，
+这时将通过反射机制使用byName自动注入策略
+算法：操作给定的二叉树，将其变换为源二叉树的镜像。
+分析：这个范老师讲过，思路比较简单，首先递归到叶子结点，然后，return 交换左右结点。。。。。
+总之就是先递归，返回的时候再 交换
+ public class Solution {
+    public void Mirror(TreeNode root) {
+        if(root!=null){
+        TreeNode t=null;
+        if(root.left!=null)
+            Mirror(root.left);
+        if(root.right!=null)
+            Mirror(root.right);
+           if(root.left!=null||root.right!=null){
+               t=root.left;
+               root.left=root.right;
+               root.right=t;
+           }
+        }
+    }
+}
+今天晚上看了会源码有点蒙，所有只有一道算法题，
+今天分享的学姐 问了一个问题，让我解开了心中许久的疑惑，为什么学习java，
+一直以来在我心中，学习java，好像就是为了学习这门语言，但是学姐的看法是：是因为我要做项目，
+而学习这门语言。其实二者从字面感觉没多大区别，但是到实际中，还是有很大差异的，学习这门语言
+我好好学习java就行，但是，为了做项目，就不是学号java那么简单，不只是java，还有中间件，还有硬件的基本原理
+都是需要掌握的，而我，java都还没学好，更别提其他的东西了。一直以来内心中没有这个概念，不知道为什么学习java，
+经过这一段时间，学习的脉络也才逐渐清晰。
