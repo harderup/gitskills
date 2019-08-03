@@ -1,0 +1,47 @@
+第一种：思想：第一个作有序序列，第二个开始为无序序列，遍历无序序列，对每个元素，在有序序列中遍历，找出其待插入位置（自己写）（*推荐*）
+C语言，升序
+void insertSort(int array[],int size){
+	int i,j;
+	for(i=1;i<size;i++){
+		int temp=array[i];
+		for(j=i;j>0&&array[j-1]>temp;j--){
+			array[j]=array[j-1];
+		}
+		array[j]=temp;
+	}
+}
+java，升序
+void insertSort(int array[]){
+		int i,j;
+		int size=array.length;
+		for(i=1;i<size;i++){
+			int temp=array[i];
+			for(j=i;j>0&&array[j-1]>temp;j--){
+				array[j]=array[j-1];
+			}
+			array[j]=temp;
+		}
+	}
+第二种：折半插入排序，思想：待插位置改用折半法找出来（自己写）
+C语言，升序
+void insertSort(int array[],int size){
+	int i,j,temp;
+	int low,high,mid;
+	for(i=1;i<size;i++){
+		temp=array[i];
+		low=0;
+		high=i-1;
+		mid=low+(high-low)/2;
+		while(low<=high){
+			int mid=low+(high-low)/2;
+			if(temp<array[mid])
+				high=mid-1;
+			else
+				low=mid+1;
+		}
+		for(j=i;j>low;j--){
+			array[j]=array[j-1];
+		}
+		array[low]=temp;
+	}
+}
