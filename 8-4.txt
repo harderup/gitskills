@@ -1,0 +1,50 @@
+日期：8月5日
+学习内容：主要学习了MySQL相关知识，复习了文件上传
+问题：MySQL刚开始也就能听懂索引部分，在讲到锁，以及更深的东西，就感觉有点蒙了
+算法：
+从上往下打印出二叉树的每个节点，同层节点从左至右打印。
+分析：定义辅助数组存储结点，先将结点存入辅助数组，然后将结点拿出，再存入结点左右分支结点，将拿出结点的值存入主数组
+循环终止条件是辅助数组是否为空
+import java.util.ArrayList;
+public class Solution {
+    
+    public ArrayList<Integer> PrintFromTopToBottom(TreeNode root) {
+        ArrayList<Integer> list=new ArrayList<Integer>();
+        ArrayList<TreeNode> list1=new ArrayList<TreeNode>();
+        if(root==null)
+            return list;
+        list1.add(root);
+        while(!list1.isEmpty()){
+           TreeNode t= list1.get(0);
+            list1.remove(0);
+            if(t.left!=null)
+            list1.add(t.left);
+            if(t.right!=null)
+            list1.add(t.right);
+            list.add(t.val);
+        }
+        return list;
+    }
+}
+算法：输入两个整数序列，第一个序列表示栈的压入顺序，请判断第二个序列是否可能为该栈的弹出顺序。
+假设压入栈的所有数字均不相等。例如序列1,2,3,4,5是某栈的压入顺序，序列4,5,3,2,1是该压栈序列对
+应的一个弹出序列，但4,3,5,1,2就不可能是该压栈序列的弹出序列。（注意：这两个序列的长度是相等的）
+import java.util.ArrayList;
+import java.util.Stack;
+public class Solution {
+    
+    public boolean IsPopOrder(int [] pushA,int [] popA) {
+      Stack<Integer> s=new Stack<Integer>();
+        int j=0;
+        for(int i=0;i<pushA.length;i++){
+            s.push(pushA[i]);
+            while(!s.isEmpty()&&s.peek()==popA[j]){
+                s.pop();
+                j++;
+            }
+        }
+        if(s.isEmpty())
+            return true;
+        return false;
+    }
+}
