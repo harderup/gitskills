@@ -1,0 +1,71 @@
+第一种：二路归并排序：思路：（采用分治，每次建一块大小两倍大的内存空间存放排好的序列，在赋值到原数组）（自己写）（*推荐*）
+C语言，升序
+void mergeSort(int array[],int start,int end){
+	int* result;
+	// 两待分序列的末位置
+	int end1=start+(end-start)/2;
+	int end2=end;
+	// 两待分序列的首位置
+	int i=start;
+	int j=end1+1;
+	// 定义合并序列长度
+	int size=end-start+1;
+	int k;
+	if(end-start>0){
+		mergeSort(array,i,end1);
+		mergeSort(array,j,end2);
+		// 开始将两个已经排序完成的序列进行合并
+		result = (int*)malloc(sizeof(int)*size);
+		for(k=0;i<=end1&&j<=end2;k++){
+			result[k]=array[i]<=array[j]?array[i++]:array[j++];
+		}
+		// 得到未拿完的序列位置
+		if(i>end1){
+			i=j;
+		}
+		// 拿完
+		for(;k<size;k++){
+			result[k]=array[i++];
+		}
+		// 全部放入原数组
+		for(i=0;i<size;i++){
+			array[start++]=result[i];
+		}
+		free(result);
+	}
+}
+java，升序
+void mergeSort(int array[],int start,int end){
+		// 两待分序列
+		int[] result;
+		// 两待分序列的末位置
+		int end1=(end+start)/2;
+		int end2=end;
+		// 两待分序列的首位置
+		int i=start;
+		int j=end1+1;
+		// 定义合并序列长度
+		int size=end-start+1;
+		int k;
+		if(end-start>0){
+			mergeSort(array,i,end1);
+			mergeSort(array,j,end2);
+			// 开始将两个已经排序完成的序列进行合并
+			result = new int[size];
+			for(k=0;i<=end1&&j<=end2;k++){
+				result[k]=array[i]<=array[j]?array[i++]:array[j++];
+			}
+			// 得到未拿完的序列位置
+			if(i>end1){
+				i=j;
+			}
+			// 拿完
+			for(;k<size;k++){
+				result[k]=array[i++];
+			}
+			// 全部放入原数组
+			for(i=0;i<size;i++){
+				array[start++]=result[i];
+			}
+		}
+	}
