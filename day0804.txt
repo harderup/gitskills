@@ -1,0 +1,24 @@
+8月4日日报
+1.复习巩固学姐将的内容
+2.Leetcode55：跳跃游戏（贪心算法）
+class Solution {
+    public boolean canJump(int[] nums) {
+		int[] index=new int[nums.length];//创建一个用来存放跳跃最远距离的数组
+		for(int i=0;i<index.length;i++) {
+			index[i]=i+nums[i];
+		}
+		int jump=0;//表示当前位置
+		int max_index=index[0];//表示当前位置跳跃的最大位置下标
+		while(jump<index.length&&jump<=max_index) {//结束条件是当前位置不能超过数组的长度并且当前下标值不能超过跳跃的最大位置
+			if(max_index<index[jump]) {//如果当前位置的最大跳跃长度大于max_index，则进行更新操作
+				max_index=index[jump];
+			}
+			jump++;
+		}
+		if(jump==index.length) {
+			return true;
+		}
+		return false;
+    
+    }
+}
