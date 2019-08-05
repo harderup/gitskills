@@ -1,0 +1,55 @@
+日期：8月5日
+学习内容：学姐给我们分享了面试中常会被问到的问题，想一下自己怎么答，还是感觉自己什么都不会
+下午敲spring mvc代码，一直报404 ，一下午没调出来持续自闭~
+算法:输入一个整数数组，判断该数组是不是某二叉搜索树的后序遍历的结果。
+如果是则输出Yes,否则输出No。假设输入的数组的任意两个数字都互不相同。
+分析：数组最后一位为根节点值，将除去最后一位的分为两个数组，比最后一位小的为根节点的左分支，
+比最后一位大的为根节点的右分支，以此递归，判断右分支每一个值是否都大于跟结点
+import java.util.Arrays;
+public class Solution {
+    public boolean VerifySquenceOfBST(int [] sequence) {
+         if(sequence==null||sequence.length<=0){
+             return false;
+         }
+        int end=sequence.length-1;
+        int i=0;
+        while(sequence[i]<sequence[end]){
+            i++;
+        }
+        for(int j=i;j<end;j++){
+            if(sequence[j]<sequence[end]){
+                return false;
+            }
+        }
+        boolean left=true;
+        boolean right=true;
+        if(i>0)
+        left=VerifySquenceOfBST(Arrays.copyOfRange(sequence,0,i));
+        if(i<end)
+        right=VerifySquenceOfBST(Arrays.copyOfRange(sequence,i,end));
+        return left&&right;
+    }
+}
+算法：输入一颗二叉树的根节点和一个整数，打印出二叉树中结点值的和为输入整数的所有路径。
+路径定义为从树的根结点开始往下一直到叶结点所经过的结点形成一条路径。(注意: 在返回值的list中，
+数组长度大的数组靠前)
+public class Solution {
+         ArrayList<ArrayList<Integer>> arraylist = new ArrayList<ArrayList<Integer>>();
+    ArrayList<Integer> list = new ArrayList<Integer>();
+    public ArrayList<ArrayList<Integer>> FindPath(TreeNode root,int target) {
+        if(root==null)
+            return arraylist;
+        list.add(root.val);
+        if(root.left==null&&root.right==null&&target==root.val){
+            arraylist.add(new ArrayList<Integer>(list));
+        }
+        if(root.val<=target&&root.left!=null){
+            FindPath(root.left,target-root.val);
+        }
+     if(root.val<=target&&root.right!=null){
+            FindPath(root.right,target-root.val);
+        }
+        list.remove(list.size()-1);
+        return arraylist;
+    }
+}
