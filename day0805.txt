@@ -1,0 +1,36 @@
+8月5日日报
+1.学习了JVM第二章，未完
+2.网易笔试算法第一题
+package aliyun;
+
+import java.text.DecimalFormat;
+import java.util.Arrays;
+import java.util.Scanner;
+
+public class ali08 {
+	public static void main(String[] args) {
+		Scanner in=new Scanner(System.in);
+		int n=in.nextInt();
+		int m=in.nextInt();
+		int[]p1=new int[n];//表示学生成绩
+		int[]p2=new int[n];//拷贝一下
+		for(int i=0;i<n;i++) {
+			p1[i]=in.nextInt();
+			p2[i]=p1[i];
+		}
+		Arrays.sort(p1);
+		for(int i=0;i<m;i++) {
+			int t=in.nextInt();
+			//拿出这个同学的分数
+			int score=p1[t-1];
+			int j=0;
+			for(;j<p2.length&&score!=p2[j];j++);
+			double d=(j+1)*1.0/n*100;
+			DecimalFormat df=new DecimalFormat("0.000000");
+			String str=df.format(d)+"%";
+			System.out.printf("%s\n",str);
+		}
+		
+	}
+}
+3.进一步理解hashmap源码
