@@ -1,0 +1,3 @@
+mysql主从复制的具体过程：
+slave端的I/O读取master.info文件，获取bin.log文件名和位置点，然后向master端的bin log dump线程请求bin.log信息；master端的binlog dump线程根据slave端的Io线程请求的信息来获取master的bin log日志信息并且读取bin log日志文件的最新信息返回给slave端，slave端通过IO线程获取到内容，并且写到slave端的relay log里，并把master端的bin log文件名和位置点记录到master.info文件里。slave端的SQL线程检测到relay log中的内容更新，就会解析relay log更新的内容，并且执行相应的操作，达到和主库数据一致性。
+
