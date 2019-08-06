@@ -1,0 +1,101 @@
+第一种：LSD思想：（10个桶分别放对应位是0123456789的数，按照低位先排序，然后收集；再按照高位排序，然后再收集；依次类推，直到最高位。）（自己写）
+C语言，升序，需要20个首尾指针，未改版
+#include<stdlib.h>
+void radixSort(int array[],int size){
+	int i,j,temp1,temp2,temp3,count=0;
+	int* countarray[10];
+	int front[10];
+	int rear[10];
+	int max=array[0];
+	// 初始化桶
+	for(i=0;i<10;i++){
+		countarray[i]=(int*)malloc(sizeof(int)*(size+1));
+		front[i]=0;
+		rear[i]=0;
+	}
+	// 获取原序列最大值
+	for(i=1;i<size;i++){
+		max=array[i]>max?array[i]:max;
+	}
+	// 获取原序列最大值位数
+	while(max>0){
+		max/=10;
+		count++;
+	}
+	// 遍历位数
+    for(i=0;i<count;i++){
+		// 遍历原序列
+		for(j=0;j<size;j++){
+			temp1=i;
+			temp2=array[j];
+			while(temp1>0){
+				temp2/=10;
+				temp1--;
+			}
+			temp3=temp2%10;// 拿到了对应位的数字
+			rear[temp3]=(rear[temp3]+1)%(size+1);// 对应桶的尾指针后移
+			countarray[temp3][rear[temp3]]=array[j];// 对应桶的尾指针处赋值
+		}
+		// 赋值回原序列
+		temp1=0;
+		for(j=0;j<10;j++){
+			
+			while(front[j]-rear[j]){
+				front[j]=(front[j]+1)%(size+1);
+				array[temp1++]=countarray[j][front[j]];
+			}
+		}
+	}
+	// 释放桶
+	for(i=0;i<10;i++){
+		free(countarray[i]);
+	}
+}
+C语言，升序，改进版（*推荐*）
+#include<stdlib.h>
+void radixSort(int array[],int size){
+	int i,j,temp1,temp2,temp3,count=0;
+	int* countarray[10];
+	int top[10];
+	int max=array[0];
+	// 初始化桶
+	for(i=0;i<10;i++){
+		countarray[i]=(int*)malloc(sizeof(int)*(size));
+		top[i]=0;
+	}
+	// 获取原序列最大值
+	for(i=1;i<size;i++){
+		max=array[i]>max?array[i]:max;
+	}
+	// 获取原序列最大值位数
+	while(max>0){
+		max/=10;
+		count++;
+	}
+	// 遍历位数
+    for(i=0;i<count;i++){
+		// 遍历原序列
+		for(j=0;j<size;j++){
+			temp1=i;
+			temp2=array[j];
+			while(temp1>0){
+				temp2/=10;
+				temp1--;
+			}
+			temp3=temp2%10;// 拿到了对应位的数字
+			countarray[temp3][top[temp3]++]=array[j];// 对应桶的尾指针处赋值
+		}
+		// 赋值回原序列
+		temp1=0;
+		for(j=0;j<10;j++){
+			for(temp2=0;temp2<top[j];temp2++){
+				array[temp1++]=countarray[j][temp2];
+			}
+			top[j]=0;
+		}
+	}
+	// 释放桶
+	for(i=0;i<10;i++){
+		free(countarray[i]);
+	}
+}
