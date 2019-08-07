@@ -1,0 +1,45 @@
+主题：日报
+日期：2019年8月7日	星期3
+内容：
+1.今天学习的内容：
+bitmap的相关知识	
+2.没有解决的问题：
+没有对bitmap有更深刻的认识
+3.明天的学习计划：
+老师讲springBoot
+	
+算法：
+给定一个整数?n, 返回从?1?到?n?的字典顺序。
+
+例如，
+
+给定 n =1 3，
+返回 [1,10,11,12,13,2,3,4,5,6,7,8,9] 。
+
+请尽可能的优化算法的时间复
+杂度和空间复杂度。 输入的数据?n?小于等于?5,000,000。
+
+
+import java.util.List;
+import java.util.ArrayList;
+class Solution {
+    public static List<Integer> list=new ArrayList<Integer>();
+	public static void cat(int index,int max) {
+		if(index<=max) {
+			for(int i=0;i<=9&&index+i<=max;i++) {
+				list.add(index+i);
+				cat((index+i)*10,max);
+			}
+		}else
+			return;
+		
+	} 
+    public List<Integer> lexicalOrder(int n) {
+        list.clear();
+        for(int i=1;i<10&&i<=n;i++) {
+        	list.add(i);
+        	cat(i*10,n);
+        }
+        return list;
+    }
+}
