@@ -1,0 +1,56 @@
+主题：日报
+日期：2019年8月6日	星期2
+内容：
+1.今天学习的内容：
+老师继续讲了springMVC		
+2.没有解决的问题：
+bitmap是啥
+3.明天的学习计划：
+自己学习bitmap
+	
+算法：
+/*
+合根植物，第二版
+*/
+import java.util.Scanner;
+
+public class Main {
+
+	public static void main(String[] args) {
+		Scanner in=new Scanner(System.in);
+		int m=in.nextInt();
+		int n=in.nextInt();
+		int k=in.nextInt();
+		int []table=new int [m*n];
+		int cnt=1,sum=m*n;
+		int n1=0,n2=0,n3=0,n4=0,n5=0;
+		for(int i=0;i<k;i++) {
+			int d1=in.nextInt()-1;
+			int d2=in.nextInt()-1;
+			if(table[d1]==0&&table[d2]==0) {
+				table[d1]=table[d2]=cnt;
+				sum--;
+				cnt++;
+				n1++;
+			}else if(table[d1]!=0&&table[d2]!=0&&table[d1]!=table[d2]) {
+				sum--;
+				n2++;
+				for(int j=0;j<table.length;j++) {
+					if(table[j]==table[d2])
+						table[j]=table[d1];
+				}
+			}else if(table[d1]==0&&table[d2]!=0){
+				sum--;
+				n3++;
+				table[d1]=table[d2];
+			}else if(table[d1]!=0&&table[d2]==0) {
+				sum--;
+				n4++;
+				table[d2]=table[d1];
+			}else
+				n5++;
+		}
+		in.close();
+		System.out.println(sum+"---"+cnt+"-"+n1+"-"+n2+"-"+n3+"-"+n4+"-"+n5);
+	}
+}
